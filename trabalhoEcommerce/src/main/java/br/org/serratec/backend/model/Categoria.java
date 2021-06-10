@@ -36,15 +36,12 @@ public class Categoria {
 	@Column
 	private String descricao;
 	
-	@OneToMany(mappedBy = "categoria")
-	private List<Produto> produto = new ArrayList<Produto>();
-	
-	public Categoria(Long id, String nome, String descricao, List<Produto> produto) {
+		
+	public Categoria(Long id, String nome, String descricao) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.produto = produto;
 	}
 
 	public Categoria() {
@@ -74,13 +71,6 @@ public class Categoria {
 		this.descricao = descricao;
 	}
 
-	public List<Produto> getProduto() {
-		return produto;
-	}
-
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
-	}
 
 	@Override
 	public int hashCode() {

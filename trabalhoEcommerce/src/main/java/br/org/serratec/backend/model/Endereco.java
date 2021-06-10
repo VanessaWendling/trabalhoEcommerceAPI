@@ -2,6 +2,7 @@ package br.org.serratec.backend.model;
 
 import javax.persistence.Embeddable;
 
+
 @Embeddable
 public class Endereco {
 	private String logradouro;
@@ -9,6 +10,7 @@ public class Endereco {
 	private String bairro;
 	private String cidade;
 	private String estado;
+	
 	
 	public String getLogradouro() {
 		return logradouro;
