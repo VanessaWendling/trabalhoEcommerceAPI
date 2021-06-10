@@ -1,13 +1,26 @@
 package br.org.serratec.backend.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-//ORM - MAPEAMENTO OBJETO RELACIONAL
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "categoria")
@@ -17,19 +30,23 @@ public class Categoria {
 	@Column(name = "id_categoria")
 	private Long id;
 	
-	@Column()
+	@Column
 	private String nome;
 	
-	@Column()
+	@Column
 	private String descricao;
-
-	public Categoria(Long id, String nome, String descricao) {
+	
+	@OneToMany(mappedBy = "categoria")
+	private List<Produto> produto = new ArrayList<Produto>();
+	
+	public Categoria(Long id, String nome, String descricao, List<Produto> produto) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
+		this.produto = produto;
 	}
-	
+
 	public Categoria() {
 	}
 
@@ -57,6 +74,14 @@ public class Categoria {
 		this.descricao = descricao;
 	}
 
+	public List<Produto> getProduto() {
+		return produto;
+	}
+
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,9 +106,6 @@ public class Categoria {
 			return false;
 		return true;
 	}
-	
-	
-	
 	
 	
 }

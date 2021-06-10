@@ -24,24 +24,30 @@ public class ItemPedido {
 	@ManyToOne
 	@JoinColumn(name="id_pedido")
 	private Pedido pedido;
+	
+	@ManyToOne
+	@JoinColumn(name="id_produto")
+	private Produto produto;
+	
 
 	public ItemPedido() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemPedido(Long idItemPedido, Integer precoVenda, Integer quantidade, Pedido pedido) {
+	public ItemPedido(Long idItemPedido, Integer precoVenda, Integer quantidade, Pedido pedido, Produto produto) {
 		super();
 		this.idItemPedido = idItemPedido;
 		this.precoVenda = precoVenda;
 		this.quantidade = quantidade;
 		this.pedido = pedido;
+		this.produto = produto;
 	}
 
 	public Long getIdItemPedido() {
 		return idItemPedido;
 	}
 
-	public void setIditemPedido(Long idItemPedido) {
+	public void setIdItemPedido(Long idItemPedido) {
 		this.idItemPedido = idItemPedido;
 	}
 
@@ -67,6 +73,14 @@ public class ItemPedido {
 
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 	@Override
