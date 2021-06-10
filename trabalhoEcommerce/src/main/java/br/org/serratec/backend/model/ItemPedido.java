@@ -1,18 +1,19 @@
 package br.org.serratec.backend.model;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ItemPedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_item_pedido")
-	private Long iditemPedido;
+	private Long idItemPedido;
 
 	@Column(name = "preco_venda")
 	private Integer precoVenda;
@@ -20,27 +21,28 @@ public class ItemPedido {
 	@Column(name = "quantidade")
 	private Integer quantidade;
 
-	@Embedded
+	@ManyToOne
+	@JoinColumn(name="id_pedido")
 	private Pedido pedido;
 
 	public ItemPedido() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemPedido(Long iditemPedido, Integer precoVenda, Integer quantidade, Pedido pedido) {
+	public ItemPedido(Long idItemPedido, Integer precoVenda, Integer quantidade, Pedido pedido) {
 		super();
-		this.iditemPedido = iditemPedido;
+		this.idItemPedido = idItemPedido;
 		this.precoVenda = precoVenda;
 		this.quantidade = quantidade;
 		this.pedido = pedido;
 	}
 
-	public Long getIditemPedido() {
-		return iditemPedido;
+	public Long getIdItemPedido() {
+		return idItemPedido;
 	}
 
-	public void setIditemPedido(Long iditemPedido) {
-		this.iditemPedido = iditemPedido;
+	public void setIditemPedido(Long idItemPedido) {
+		this.idItemPedido = idItemPedido;
 	}
 
 	public Integer getPrecoVenda() {
@@ -71,7 +73,7 @@ public class ItemPedido {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((iditemPedido == null) ? 0 : iditemPedido.hashCode());
+		result = prime * result + ((idItemPedido == null) ? 0 : idItemPedido.hashCode());
 		return result;
 	}
 
@@ -84,10 +86,10 @@ public class ItemPedido {
 		if (getClass() != obj.getClass())
 			return false;
 		ItemPedido other = (ItemPedido) obj;
-		if (iditemPedido == null) {
-			if (other.iditemPedido != null)
+		if (idItemPedido == null) {
+			if (other.idItemPedido != null)
 				return false;
-		} else if (!iditemPedido.equals(other.iditemPedido))
+		} else if (!idItemPedido.equals(other.idItemPedido))
 			return false;
 		return true;
 	}
