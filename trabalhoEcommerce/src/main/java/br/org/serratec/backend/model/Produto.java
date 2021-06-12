@@ -12,6 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Produto {
@@ -21,22 +27,31 @@ public class Produto {
 	@Column(name = "id_produto")
 	private Long id;
 	
-	private String nome;
-	private String descricao;
+	@NotBlank (message = "Campo NOME vazio")
+    @Size(max = 30, message = "NOME acima de 30 caracteres")
+    private String nome;
+
+    @Size(max = 100, message = "DESCRIÇÃO acima de 100 caracteres")
+    private String descricao;
+
+    @NotBlank (message = "Campo QUANTIDADE ESTOQUE vazio")
+    @Column(name = "qnt_estoque")
+    private Integer qntEstoque;
+
+    @Past
+    @Column(name = "data_cadastro")
+    private LocalDate dataCadastro;
+
+    @NotBlank (message = "Campo VALOR UNITARIO vazio")
+    @Column(name = "valor_unitario")
+    private Double valorUnitario;
 	
-	@Column(name = "qnt_estoque")
-	private Integer qntEstoque;
-	
-	@Column(name = "data_cadastro")
-	private LocalDate dataCadastro;
-	
-	@Column(name = "valor_unitario")
-	private Double valorUnitario;
-	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy = "produto")
 	private List<ItemPedido> itemPedido = new ArrayList<ItemPedido>();
 	

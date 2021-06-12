@@ -8,6 +8,7 @@ import br.org.serratec.backend.model.Pedido;
 
 
 public class ClienteMostrarDTO {
+	private Long id;
     private String nomeCompleto;
     private Endereco enderecos;
     private List<Pedido> pedidos;
@@ -18,6 +19,7 @@ public class ClienteMostrarDTO {
 
 	public ClienteMostrarDTO(Cliente cliente) {
 		super();
+		this.id = cliente.getIdCliente();
 		this.nomeCompleto = cliente.getNomeCompleto();
 		this.enderecos = cliente.getEnderecos();
 		this.pedidos = cliente.getPedidos();
@@ -45,6 +47,14 @@ public class ClienteMostrarDTO {
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
     

@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class ItemPedido {
@@ -15,11 +16,13 @@ public class ItemPedido {
 	@Column(name = "id_item_pedido")
 	private Long idItemPedido;
 
-	@Column(name = "preco_venda")
-	private Integer precoVenda;
+	@NotBlank (message = "Campo PREÇO VENDA vazio")
+    @Column(name = "preco_venda")
+    private Integer precoVenda;
 
-	@Column(name = "quantidade")
-	private Integer quantidade;
+    @NotBlank (message = "Campo QUANTIDADE vazio")
+    @Column(name = "quantidade")
+    private Integer quantidade;
 
 	@ManyToOne
 	@JoinColumn(name="id_pedido")

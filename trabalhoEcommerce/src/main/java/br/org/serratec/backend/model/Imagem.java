@@ -5,35 +5,39 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria {
+public class Imagem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_categoria")
+	@Column (name = "id_imagem")
 	private Long id;
 	
-	@NotBlank (message = "Campo NOME vazio")
-    @Size(max = 30, message = "NOME acima de 30 caracteres")
-    @Column
-    private String nome;
-
-    @Size(max = 150,  message = "DESCRIÇÃO acima de 150 caracteres")
-    @Column
-    private String descricao;
-		
-	public Categoria(Long id, String nome, String descricao) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.descricao = descricao;
+	//smp que for trabalhar com foto precisa colocar
+	@Lob // significa que vai trabalhar com binário
+	private byte[] dados;
+	
+	private String tipo;
+	private String nome;
+	
+	@OneToOne
+	@JoinColumn (name = "id_produto")
+	private Produto produto;
+	
+	public Imagem() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public Categoria() {
+	public Imagem(Long id, byte[] dados, String tipo, String nome, Produto produto) {
+		super();
+		this.id = id;
+		this.dados = dados;
+		this.tipo = tipo;
+		this.nome = nome;
+		this.produto = produto;
 	}
 
 	public Long getId() {
@@ -44,6 +48,22 @@ public class Categoria {
 		this.id = id;
 	}
 
+	public byte[] getDados() {
+		return dados;
+	}
+
+	public void setDados(byte[] dados) {
+		this.dados = dados;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -52,14 +72,13 @@ public class Categoria {
 		this.nome = nome;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -77,7 +96,7 @@ public class Categoria {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Imagem other = (Imagem) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -85,6 +104,5 @@ public class Categoria {
 			return false;
 		return true;
 	}
-	
 	
 }

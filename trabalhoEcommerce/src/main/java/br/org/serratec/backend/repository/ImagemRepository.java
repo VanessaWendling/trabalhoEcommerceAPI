@@ -3,10 +3,9 @@ package br.org.serratec.backend.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.org.serratec.backend.model.Cliente;
+import br.org.serratec.backend.model.Imagem;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
+public interface ImagemRepository extends JpaRepository<Imagem, Long>{
 
-	public Cliente findByEmail(String email);
 }

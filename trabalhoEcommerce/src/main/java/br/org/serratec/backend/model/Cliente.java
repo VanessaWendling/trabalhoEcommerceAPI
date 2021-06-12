@@ -4,13 +4,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -27,40 +29,46 @@ public class Cliente {
 	@Column(name = "id_cliente")
 	private Long idCliente;
 	
-	@NotBlank(message = "Nome Invalido")
-	@Size(max = 60, message = "Nome acima de 60 caracteres")
-	@Column(name = "nome_completo")
-	private String nomeCompleto;
+	@NotBlank(message = "Campo Nome Vazio")
+    @Size(max = 60, message = "Nome acima de 60 caracteres")
+    @Column(name = "nome_completo")
+    private String nomeCompleto;
+
+    @NotBlank(message = "Campo Nome do usuario vazio")
+    @Size(max = 20, message = "Nome acima de 20 caracteres")
+    @Column(name = "nome_usuario")
+    private String nomeUsuario;
+
+    @NotBlank(message = "Campo EMAIL vazio")
+    @Size(max = 30, message = "Email acima de 30 caracteres")
+    @Email(message = "Email invalido")
+    private String email;
+
+    @NotBlank(message = "Campo CPF vazio")
+    @Size(max = 14, message = "CPF acima de 14 caracteres")
+    @CPF(message = "CPF no formato invalido")
+    private String cpf;
+
+    @NotBlank(message = "Campo SENHA vaziO")
+    @Size(max = 255, message = "Senha muito grande")
+    private String senha;
+
+    @Past
+    @Column(name = "data_nasc")
+    private LocalDate dataNasc;
 	
-	@NotBlank(message = "Nome do usuario Invalido")
-	@Size(max = 20, message = "Nome acima de 20 caracteres")
-	@Column(name = "nome_usuario")
-	private String nomeUsuario;
-	
-	@NotBlank(message = "email vazio")
-	@Column
-	@Email(message = "Email invalido")
-	private String email;
-	
-	@NotBlank(message = "cpf vazio")
-	@Column
-	@CPF(message = "CPF no formato invalido")
-	private String cpf;
-	
-	@NotBlank(message = "senha vazia")
-	@Size(max = 255, message = "Senha muito grande")
-	private String senha;
-	
-	@Past
-	@Column(name = "data_nasc")
-	private LocalDate dataNasc;
-	
-	@Embedded
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_endereco")
 	private Endereco enderecos;
 	
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
+	@Override
+	public String toString() {
+		return "Nome Completo: " + nomeCompleto + "\nNome Usuario: " + nomeUsuario + "\nEmail: " + email;
+	}
+
 	public Cliente() {
 		// TODO Auto-generated constructor stub
 	}

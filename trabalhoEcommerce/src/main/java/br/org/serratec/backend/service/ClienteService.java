@@ -36,6 +36,14 @@ public class ClienteService {
 		}
 		return clienteDTOs;
 	}
+	/*
+	public Cliente buscar (Long id) {
+		Cliente cliente = clienteRepository.getById(id);
+		if(cliente != null)
+		return clienteRepository.findById(id).get();
+	else 
+		throw new ("Cliente não existente");
+	}*/
 	
 		public ClienteMostrarDTO inserir(Cliente cliente) throws EmailException{
 	        Cliente u = clienteRepository.findByEmail(cliente.getEmail()); //irá fazer o Find para conferir se o email digitado já existe
@@ -53,8 +61,12 @@ public class ClienteService {
 	        clienteSetar.setEnderecos(cliente.getEnderecos());
 	        clienteSetar.setPedidos(cliente.getPedidos());
 	        clienteSetar =  clienteRepository.save(clienteSetar);
-	        mailConfig.enviarEmail(cliente.getEmail(), "Cadastro de Usuário", clienteSetar.toString());
+	        mailConfig.enviarEmail(cliente.getEmail(), "Cadastro de Cliente", clienteSetar.toString());
 	        return new ClienteMostrarDTO(clienteSetar);
 	    }
+		
+		
+
+
 	
 }

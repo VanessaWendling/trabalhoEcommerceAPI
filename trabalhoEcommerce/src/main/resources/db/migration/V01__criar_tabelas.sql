@@ -31,8 +31,7 @@ nome varchar(30) NOT NULL,
 descricao varchar(100),
 qtd_estoque INTEGER NOT NULL,
 data_cadastro DATE,
-valor_unitario FLOAT NOT NULL, 
-imagem bytea,
+valor_unitario FLOAT NOT NULL,
 id_categoria INTEGER, FOREIGN KEY(id_categoria) REFERENCES categoria(id_categoria));
 
 
@@ -41,3 +40,9 @@ quantidade INTEGER NOT NULL,
 preco_venda INTEGER NOT NULL,
  id_pedido INTEGER, FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
  id_produto INTEGER,  FOREIGN KEY (id_produto) REFERENCES produto(id_produto));
+ 
+ CREATE TABLE imagem (id_imagem SERIAL PRIMARY KEY,
+ dados oid,
+ nome varchar(100),
+ tipo varchar(100),
+ id_produto INTEGER, FOREIGN KEY(id_produto) REFERENCES produto(id_produto));
