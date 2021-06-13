@@ -48,14 +48,8 @@ public class CategoriaController {
 		return ResponseEntity.noContent().build();
 	}
 
-	/*@GetMapping ("/{id}")
-	public CategoriaMostrarDTO atualizar(@PathVariable Long id, CategoriaInserirDTO categoriaInserirDTO) {
-		if (!categoriaService.atualizar(id, categoriaInserirDTO)) {
-			
-		}
-	}*/
 	
-	@GetMapping ("/{id}")
+	@GetMapping ("/porid/{id}")
 	public ResponseEntity <CategoriaMostrarDTO> buscar (@PathVariable Long id){
 		CategoriaMostrarDTO categoriaMostrarDTO = categoriaService.buscar(id);
 		if (categoriaMostrarDTO == null) {
@@ -64,14 +58,15 @@ public class CategoriaController {
 		return ResponseEntity.ok(categoriaMostrarDTO);
 	}
 	
-	/*@GetMapping ("/{nome}")
+	@GetMapping ("/pornome/{nome}")
 	public ResponseEntity<CategoriaMostrarDTO> buscarPorNome (@PathVariable String nome){
-		List<CategoriaMostrarDTO> categoriaMostrarDTO = categoriaService.buscarPorNome(nome);
-		if (categoriaMostrarDTO == null) {
+		CategoriaMostrarDTO dto = categoriaService.buscarPorNome(nome);
+		if (dto == null) {
 			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.ok(dto);
 
-	}*/
+	}
 	
 	
 }

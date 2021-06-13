@@ -21,6 +21,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -45,7 +47,7 @@ public class Cliente {
     private String email;
 
     @NotBlank(message = "Campo CPF vazio")
-    @Size(max = 14, message = "CPF acima de 14 caracteres")
+    @Size(max = 11, message = "CPF acima de 14 caracteres")
     @CPF(message = "CPF no formato invalido")
     private String cpf;
 
@@ -60,6 +62,7 @@ public class Cliente {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
 	private Endereco enderecos;
+	
 	
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<Pedido>();

@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.org.serratec.backend.dto.CategoriaInserirDTO;
+import br.org.serratec.backend.dto.CategoriaMostrarDTO;
+import br.org.serratec.backend.dto.ProdutoInserirDTO;
 import br.org.serratec.backend.dto.ProdutoMostrarDTO;
+import br.org.serratec.backend.model.Categoria;
 import br.org.serratec.backend.model.Produto;
 import br.org.serratec.backend.repository.ProdutoRepository;
 
@@ -25,14 +29,14 @@ public class ProdutoService {
 	private ProdutoRepository produtoRepository;
 	
 	public List<ProdutoMostrarDTO> listar() {
-		List<Produto> listaProdutos = produtoRepository.findAll();
 		List<ProdutoMostrarDTO> listaProdutosDTO = new ArrayList<ProdutoMostrarDTO>();
-		
+		List<Produto> listaProdutos = produtoRepository.findAll();
 		for (Produto produto : listaProdutos) {
 			listaProdutosDTO.add(adicionarFotoURL(produto));
 		}
 		return listaProdutosDTO;
 	}
+
 	
 	public ProdutoMostrarDTO adicionarFotoURL(Produto produto) {
 		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/produtos/{id}/foto").buildAndExpand(produto.getId()).toUri();
@@ -48,10 +52,18 @@ public class ProdutoService {
 		return adicionarFotoURL(produtoOptional.get());
 	}
 	
-	public ProdutoMostrarDTO inserir(Produto produto, MultipartFile file) throws IOException {
+	public ProdutoMostrarDTO inserir(ProdutoInserirDTO produtoInserirDTO, MultipartFile file) throws IOException {
+		Produto produto = new Produto();
+		produto.setCategoria(produtoInserirDTO.getCategoria());
+		produto.setDataCadastro(produtoInserirDTO.getDataCadastro());
+		produto.setDescricao(produtoInserirDTO.getDescricao());
+		produto.setNome(produtoInserirDTO.getNome());
+		produto.setQntEstoque(produtoInserirDTO.getQntEstoque());
+		produto.setValorUnitario(produtoInserirDTO.getValorUnitario());
 		imagemService.inserir(produtoRepository.save(produto), file);
 		return adicionarFotoURL(produto);
 	}
+	
 
 }
 

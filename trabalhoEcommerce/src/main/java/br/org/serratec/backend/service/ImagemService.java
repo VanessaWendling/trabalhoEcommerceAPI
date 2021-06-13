@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.org.serratec.backend.dto.ProdutoInserirDTO;
 import br.org.serratec.backend.model.Imagem;
 import br.org.serratec.backend.model.Produto;
 import br.org.serratec.backend.repository.ImagemRepository;

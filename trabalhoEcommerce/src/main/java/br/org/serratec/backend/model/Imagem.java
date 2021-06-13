@@ -25,6 +25,7 @@ public class Imagem {
 	
 	@OneToOne
 	@JoinColumn (name = "id_produto")
+	//@Column (unique = true)
 	private Produto produto;
 	
 	public Imagem() {

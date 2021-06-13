@@ -61,17 +61,12 @@ public class CategoriaService {
 		return new CategoriaMostrarDTO(categoria.get());
 	}
 	
-		public List<CategoriaMostrarDTO> buscarPorNome (String nome) {
-			List<CategoriaMostrarDTO> categoriaDTOs = new ArrayList<CategoriaMostrarDTO>();
-			List<Categoria> categorias = categoriaRepository.findByNome(nome);
-			for (Categoria categoria : categorias) {
-				CategoriaMostrarDTO dto = new CategoriaMostrarDTO(categoria);
-				categoriaDTOs.add(dto);
-			}
-			if (categoriaDTOs.isEmpty()) {
-				return null;
-			}
-			return categoriaDTOs;	
+		public CategoriaMostrarDTO buscarPorNome (String nome) {
+		Optional<Categoria> categoria= categoriaRepository.findByNome(nome);
+		if (!categoria.isPresent()) {
+			return null;
+		}
+		return new CategoriaMostrarDTO(categoria.get());
 	}
 	
 }
