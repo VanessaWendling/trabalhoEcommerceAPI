@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.org.serratec.backend.dto.ProdutoInserirDTO;
 import br.org.serratec.backend.dto.ProdutoMostrarDTO;
 import br.org.serratec.backend.model.Imagem;
+import br.org.serratec.backend.model.Produto;
 import br.org.serratec.backend.service.ImagemService;
 import br.org.serratec.backend.service.ProdutoService;
 
@@ -35,10 +35,10 @@ public class ProdutoController {
 
 	@PostMapping
     @ResponseStatus (HttpStatus.CREATED)
-	public ProdutoMostrarDTO inserir(@RequestParam MultipartFile file, @RequestPart ProdutoInserirDTO produtoInserirDTO) throws IOException{
-        return produtoService.inserir(produtoInserirDTO, file);
-    }
-	
+	public ProdutoMostrarDTO inserir(@RequestParam MultipartFile file, @RequestPart Produto produto) throws IOException{
+        return produtoService.inserir(produto, file);
+
+	}
 	
 	@GetMapping ("/{id}/imagem")
     public ResponseEntity<byte[]> buscarPorFoto (@PathVariable Long id){

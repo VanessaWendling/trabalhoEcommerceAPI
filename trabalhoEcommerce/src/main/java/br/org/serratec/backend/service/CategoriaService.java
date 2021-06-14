@@ -62,7 +62,7 @@ public class CategoriaService {
 	}
 	
 		public CategoriaMostrarDTO buscarPorNome (String nome) {
-		Optional<Categoria> categoria= categoriaRepository.findByNome(nome);
+		Optional<Categoria> categoria = categoriaRepository.findByNome(nome);
 		if (!categoria.isPresent()) {
 			return null;
 		}

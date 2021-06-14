@@ -9,21 +9,26 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "categoria")
 public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_categoria")
+	@ApiModelProperty(value = "Identificador único de Categoria")
 	private Long id;
 	
 	@NotBlank (message = "Campo NOME vazio")
     @Size(max = 30, message = "NOME acima de 30 caracteres")
     @Column(unique = true)
+	@ApiModelProperty(value = "Nome", required = true)
     private String nome;
 
     @Size(max = 150,  message = "DESCRIÇÃO acima de 150 caracteres")
     @Column
+    @ApiModelProperty(value = "Descricao", required = true)
     private String descricao;
 		
 	public Categoria(Long id, String nome, String descricao) {

@@ -9,23 +9,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Imagem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column (name = "id_imagem")
+	@ApiModelProperty(value = "Identificador único da Imagem")
 	private Long id;
 	
 	//smp que for trabalhar com foto precisa colocar
 	@Lob // significa que vai trabalhar com binário
+	@ApiModelProperty(value = "Dados", required = true)
 	private byte[] dados;
-	
+	@ApiModelProperty(value = "Tipo", required = true)
 	private String tipo;
+	@ApiModelProperty(value = "Nome", required = true)
 	private String nome;
 	
 	@OneToOne
 	@JoinColumn (name = "id_produto")
-	//@Column (unique = true)
+	@ApiModelProperty(value = "Produto", required = true)
 	private Produto produto;
 	
 	public Imagem() {

@@ -23,48 +23,61 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente")
+	@ApiModelProperty(value = "Identificador único do Cliente")
 	private Long idCliente;
 	
 	@NotBlank(message = "Campo Nome Vazio")
     @Size(max = 60, message = "Nome acima de 60 caracteres")
     @Column(name = "nome_completo")
+	@ApiModelProperty(value = "Nome Completo", required = true)
     private String nomeCompleto;
 
     @NotBlank(message = "Campo Nome do usuario vazio")
     @Size(max = 20, message = "Nome acima de 20 caracteres")
     @Column(name = "nome_usuario")
+    @ApiModelProperty(value = "Nome de Usuário", required = true)
     private String nomeUsuario;
 
     @NotBlank(message = "Campo EMAIL vazio")
     @Size(max = 30, message = "Email acima de 30 caracteres")
     @Email(message = "Email invalido")
+    @ApiModelProperty(value = "Email", required = true)
     private String email;
 
     @NotBlank(message = "Campo CPF vazio")
     @Size(max = 11, message = "CPF acima de 14 caracteres")
     @CPF(message = "CPF no formato invalido")
+    @ApiModelProperty(value = "CPF", required = true)
     private String cpf;
 
     @NotBlank(message = "Campo SENHA vaziO")
     @Size(max = 255, message = "Senha muito grande")
+    @ApiModelProperty(value = "Senha", required = true)
     private String senha;
 
     @Past
     @Column(name = "data_nasc")
+    @ApiModelProperty(value = "Data de Nascimento", required = true)
     private LocalDate dataNasc;
+    
+    private String telefone;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne//(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
+	@ApiModelProperty(value = "Endereco do Cliente", required = true)
 	private Endereco enderecos;
 	
 	
 	@OneToMany(mappedBy = "cliente")
+	@ApiModelProperty(value = "Pedidos do Cliente")
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	@Override
@@ -77,12 +90,12 @@ public class Cliente {
 	}
 	
 	public Cliente(Long idCliente,
-			@NotBlank(message = "Nome Invalido") @Size(max = 60, message = "Nome acima de 60 caracteres") String nomeCompleto,
-			@NotBlank(message = "Nome do usuario Invalido") @Size(max = 20, message = "Nome acima de 20 caracteres") String nomeUsuario,
-			@NotBlank(message = "email vazio") @Email(message = "Email invalido") String email,
-			@NotBlank(message = "cpf vazio") @CPF(message = "CPF no formato invalido") String cpf,
-			@NotBlank(message = "senha vazia") @Size(max = 255, message = "Senha muito grande") String senha,
-			@Past LocalDate dataNasc, Endereco enderecos, List<Pedido> pedidos) {
+			@NotBlank(message = "Campo Nome Vazio") @Size(max = 60, message = "Nome acima de 60 caracteres") String nomeCompleto,
+			@NotBlank(message = "Campo Nome do usuario vazio") @Size(max = 20, message = "Nome acima de 20 caracteres") String nomeUsuario,
+			@NotBlank(message = "Campo EMAIL vazio") @Size(max = 30, message = "Email acima de 30 caracteres") @Email(message = "Email invalido") String email,
+			@NotBlank(message = "Campo CPF vazio") @Size(max = 11, message = "CPF acima de 14 caracteres") @CPF(message = "CPF no formato invalido") String cpf,
+			@NotBlank(message = "Campo SENHA vaziO") @Size(max = 255, message = "Senha muito grande") String senha,
+			@Past LocalDate dataNasc, String telefone, Endereco enderecos, List<Pedido> pedidos) {
 		super();
 		this.idCliente = idCliente;
 		this.nomeCompleto = nomeCompleto;
@@ -91,8 +104,17 @@ public class Cliente {
 		this.cpf = cpf;
 		this.senha = senha;
 		this.dataNasc = dataNasc;
+		this.telefone = telefone;
 		this.enderecos = enderecos;
 		this.pedidos = pedidos;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public Long getIdCliente() {

@@ -8,34 +8,45 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_endereco")
+	@ApiModelProperty(value = "Identidicador único de Endereco")
 	private Long id;
+	
 	@NotBlank (message = "Campo CEP vazio")
 	@Size(max = 9)
+	@ApiModelProperty(value = "Cep", required = true)
 	private String cep;
 	
-	//@NotBlank (message = "Campo RUA vazio")
+	
 	@Size(max = 100)
+	@ApiModelProperty(value = "Rua")
 	private String rua;
 	
-	//@NotBlank (message = "Campo BAIRRO vazio")
+	
 	@Size(max = 50)
+	@ApiModelProperty(value = "Bairro")
 	private String bairro;
 	
 	@Size(max = 30)
+	@ApiModelProperty(value = "Cidade")
 	private String cidade;
 	
 	@NotBlank (message = "Campo NUMERO vazio")
+	@ApiModelProperty(value = "Bairro", required = true)
 	private Integer numero;
 	
 	@Size(max = 20)
+	@ApiModelProperty(value = "Complemento")
 	private String complemento;
 	
-	@Size(max = 20)
+	@Size(max = 2)
+	@ApiModelProperty(value = "Estado")
 	private String estado;
 	
 	

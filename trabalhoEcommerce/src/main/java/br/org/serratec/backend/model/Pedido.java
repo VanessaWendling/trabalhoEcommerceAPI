@@ -18,33 +18,42 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pedido")
+	@ApiModelProperty(value = "Identificador único do Pedido")
 	private Long idPedido;
 	
 	@NotBlank (message = "Data do Pedido vazia")
 	@Column(name = "data_pedido")
+	@ApiModelProperty(value = "Data do Pedido", required = true)
 	private LocalDate dataPedido;
 	
 	@Column(name = "data_entrega")
+	@ApiModelProperty(value = "Data de Entrega", required = true)
 	private LocalDate dataEntrega;
 	
 	@Column(name = "data_envio")
+	@ApiModelProperty(value = "Data de Envio", required = true)
 	private LocalDate dataEnvio;
 	
 	@Column(name = "status")
 	@Size(max = 20)
 	@Enumerated (EnumType.STRING)
+	@ApiModelProperty(value = "Status do Pedido", required = true)
 	private Status status;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	@ApiModelProperty(value = "Lista de Pedidos")
 	private List<ItemPedido> itemPedido = new ArrayList<ItemPedido>();	
 	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
+	@ApiModelProperty(value = "Identificador único do Cliente")
 	private Cliente cliente;
 	
 	public Pedido() {
@@ -134,6 +143,18 @@ public class Pedido {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+
+
+	public List<ItemPedido> getItemPedido() {
+		return itemPedido;
+	}
+
+
+
+	public void setItemPedido(List<ItemPedido> itemPedido) {
+		this.itemPedido = itemPedido;
 	}
 
 

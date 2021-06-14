@@ -1,7 +1,10 @@
 package br.org.serratec.backend.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import br.org.serratec.backend.model.ItemPedido;
 import br.org.serratec.backend.model.Pedido;
 import br.org.serratec.backend.model.Status;
 
@@ -11,6 +14,7 @@ public class PedidoInserirDTO {
 	private LocalDate dataEntrega;
 	private LocalDate dataEnvio;
 	private Status status;
+	private List<ItemPedido> itemPedido = new ArrayList<ItemPedido>();
 	
 	public PedidoInserirDTO() {
 		// TODO Auto-generated constructor stub
@@ -22,6 +26,7 @@ public class PedidoInserirDTO {
 		this.dataEntrega = pedido.getDataEntrega();
 		this.dataEnvio = pedido.getDataEnvio();
 		this.status = pedido.getStatus();
+		this.itemPedido = pedido.getItemPedido();
 	}
 
 	public LocalDate getDataPedido() {
@@ -54,6 +59,14 @@ public class PedidoInserirDTO {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public List<ItemPedido> getItemPedido() {
+		return itemPedido;
+	}
+
+	public void setItemPedido(List<ItemPedido> itemPedido) {
+		this.itemPedido = itemPedido;
 	}
 	
 }

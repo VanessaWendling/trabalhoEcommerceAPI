@@ -43,6 +43,12 @@ public class ProdutoService {
 		System.out.println("URI: " + uri);
 		ProdutoMostrarDTO produtoDTO = new ProdutoMostrarDTO();
 		produtoDTO.setNome(produto.getNome());
+		produto.setCategoria(produto.getCategoria());
+		produto.setDataCadastro(produto.getDataCadastro());
+		produto.setDescricao(produto.getDescricao());
+		produto.setNome(produto.getNome());
+		produto.setQntEstoque(produto.getQntEstoque());
+		produto.setValorUnitario(produto.getValorUnitario());
 		produtoDTO.setUrl(uri.toString());
 		return produtoDTO;
 	}
@@ -52,14 +58,7 @@ public class ProdutoService {
 		return adicionarFotoURL(produtoOptional.get());
 	}
 	
-	public ProdutoMostrarDTO inserir(ProdutoInserirDTO produtoInserirDTO, MultipartFile file) throws IOException {
-		Produto produto = new Produto();
-		produto.setCategoria(produtoInserirDTO.getCategoria());
-		produto.setDataCadastro(produtoInserirDTO.getDataCadastro());
-		produto.setDescricao(produtoInserirDTO.getDescricao());
-		produto.setNome(produtoInserirDTO.getNome());
-		produto.setQntEstoque(produtoInserirDTO.getQntEstoque());
-		produto.setValorUnitario(produtoInserirDTO.getValorUnitario());
+	public ProdutoMostrarDTO inserir(Produto produto, MultipartFile file) throws IOException {
 		imagemService.inserir(produtoRepository.save(produto), file);
 		return adicionarFotoURL(produto);
 	}

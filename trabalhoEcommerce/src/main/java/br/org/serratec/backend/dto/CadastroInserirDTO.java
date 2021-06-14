@@ -5,7 +5,8 @@ import java.time.LocalDate;
 import br.org.serratec.backend.model.Cliente;
 import br.org.serratec.backend.model.Endereco;
 
-public class ClienteInserirDTO {
+public class CadastroInserirDTO {
+
 	private String nomeCompleto;
     private String nomeUsuario;
     private String email;
@@ -13,23 +14,19 @@ public class ClienteInserirDTO {
     private String senha;
     private LocalDate dataNasc;
     private String telefone;
-    private Endereco endereco;
-    
+    private String cep;
+    private Integer numero;
 	
-	public ClienteInserirDTO() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public ClienteInserirDTO(Cliente cliente) {
-		super();
+    public CadastroInserirDTO(Cliente cliente, Endereco endereco) {
 		this.nomeCompleto = cliente.getNomeCompleto();
 		this.nomeUsuario = cliente.getNomeUsuario();
 		this.email = cliente.getEmail();
 		this.cpf = cliente.getCpf();
 		this.senha = cliente.getSenha();
 		this.dataNasc = cliente.getDataNasc();
-		this.endereco = cliente.getEnderecos();
 		this.telefone = cliente.getTelefone();
+		this.cep = endereco.getCep();
+		this.numero = endereco.getNumero();
 	}
 
 	public String getNomeCompleto() {
@@ -80,14 +77,6 @@ public class ClienteInserirDTO {
 		this.dataNasc = dataNasc;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
 	public String getTelefone() {
 		return telefone;
 	}
@@ -95,6 +84,20 @@ public class ClienteInserirDTO {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	
-	
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}    
 }

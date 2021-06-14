@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.org.serratec.backend.dto.ClienteInserirDTO;
-import br.org.serratec.backend.dto.ClienteMostrarDTO;
+import br.org.serratec.backend.dto.CadastroInserirDTO;
+import br.org.serratec.backend.dto.CadastroMostrarDTO;
 import br.org.serratec.backend.exception.EmailException;
 import br.org.serratec.backend.service.ClienteService;
 
@@ -22,9 +22,9 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
 	@PostMapping
-	public ResponseEntity<Object> inserir (@RequestBody ClienteInserirDTO clienteInserirDTO){
+	public ResponseEntity<Object> inserir (@RequestBody CadastroInserirDTO cadastroInserirDTO){
 		try {
-			ClienteMostrarDTO dto = clienteService.inserir(clienteInserirDTO);
+			CadastroMostrarDTO dto = clienteService.inserir(cadastroInserirDTO);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 					.buildAndExpand(dto.getId()).toUri();
 			return ResponseEntity.created(uri).body(dto);

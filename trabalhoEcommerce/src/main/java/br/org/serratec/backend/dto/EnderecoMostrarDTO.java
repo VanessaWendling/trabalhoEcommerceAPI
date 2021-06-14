@@ -3,12 +3,13 @@ package br.org.serratec.backend.dto;
 import br.org.serratec.backend.model.Endereco;
 
 public class EnderecoMostrarDTO {
-
-	private String rua;
+	private String cep;
+	private String logradouro;
 	private Integer numero;
 	private String bairro;
-	private String cidade;
-	private String estado;
+	private String localidade;
+	private String complemento;
+	private String uf;
 	
 	public EnderecoMostrarDTO() {
 		// TODO Auto-generated constructor stub
@@ -16,19 +17,21 @@ public class EnderecoMostrarDTO {
 
 	public EnderecoMostrarDTO(Endereco endereco) {
 		super();
-		this.rua = endereco.getRua();
+		this.cep = endereco.getCep();
+		this.logradouro = endereco.getRua();
 		this.numero = endereco.getNumero();
 		this.bairro = endereco.getBairro();
-		this.cidade = endereco.getCidade();
-		this.estado = endereco.getEstado();
+		this.localidade = endereco.getCidade();
+		this.uf = endereco.getEstado();
+		this.complemento = endereco.getComplemento();
 	}
 
-	public String getRua() {
-		return rua;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public void setRua(String rua) {
-		this.rua = rua;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
 
 	public Integer getNumero() {
@@ -47,20 +50,38 @@ public class EnderecoMostrarDTO {
 		this.bairro = bairro;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getLocalidade() {
+		return localidade;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getComplemento() {
+		return complemento;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	
 	
 }

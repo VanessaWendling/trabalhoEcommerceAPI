@@ -19,40 +19,50 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_produto")
+	@ApiModelProperty(value = "Identificador único do Produto")
 	private Long id;
 	
 	@NotBlank (message = "Campo NOME vazio")
     @Size(max = 30, message = "NOME acima de 30 caracteres")
+	@ApiModelProperty(value = "Nome", required = true)
     private String nome;
 
     @Size(max = 100, message = "DESCRIÇÃO acima de 100 caracteres")
+    @ApiModelProperty(value = "Descricao")
     private String descricao;
 
     @NotBlank (message = "Campo QUANTIDADE ESTOQUE vazio")
     @Column(name = "qnt_estoque")
+    @ApiModelProperty(value = "Quantidade em Estoque", required = true)
     private Integer qntEstoque;
 
     @Past
     @Column(name = "data_cadastro")
+    @ApiModelProperty(value = "Data de Cadastro")
     private LocalDate dataCadastro;
 
     @NotBlank (message = "Campo VALOR UNITARIO vazio")
     @Column(name = "valor_unitario")
+    @ApiModelProperty(value = "Valor Unitário", required = true)
     private Double valorUnitario;
 	
 	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
+	@ApiModelProperty(value = "Categoria")
 	private Categoria categoria;
 	
 	@JsonBackReference
 	@OneToMany(mappedBy = "produto")
+	@ApiModelProperty(value = "Lista de Pedidos")
 	private List<ItemPedido> itemPedido = new ArrayList<ItemPedido>();
 	
 	public Produto() {

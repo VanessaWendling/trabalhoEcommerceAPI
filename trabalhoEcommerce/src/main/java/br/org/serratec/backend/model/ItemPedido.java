@@ -9,27 +9,34 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class ItemPedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_item_pedido")
+	@ApiModelProperty(value = "Identificador único do Pedido Item")
 	private Long idItemPedido;
 
 	@NotBlank (message = "Campo PREÇO VENDA vazio")
     @Column(name = "preco_venda")
+	@ApiModelProperty(value = "Preço de venda", required = true)
     private Integer precoVenda;
 
     @NotBlank (message = "Campo QUANTIDADE vazio")
     @Column(name = "quantidade")
+    @ApiModelProperty(value = "Quantidade", required = true)
     private Integer quantidade;
 
 	@ManyToOne
 	@JoinColumn(name="id_pedido")
+	@ApiModelProperty(value = "Identificador único do Pedido")
 	private Pedido pedido;
 	
 	@ManyToOne
 	@JoinColumn(name="id_produto")
+	@ApiModelProperty(value = "Identificador único do Produto")
 	private Produto produto;
 	
 
