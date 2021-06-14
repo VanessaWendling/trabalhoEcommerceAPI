@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,7 +49,6 @@ public class ProdutoService {
 		produto.setDataCadastro(produto.getDataCadastro());
 		produto.setDescricao(produto.getDescricao());
 		produto.setNome(produto.getNome());
-		produto.setQntEstoque(produto.getQntEstoque());
 		produto.setValorUnitario(produto.getValorUnitario());
 		produtoDTO.setUrl(uri.toString());
 		return produtoDTO;
@@ -57,12 +58,22 @@ public class ProdutoService {
 		Optional<Produto> produtoOptional = produtoRepository.findById(id);
 		return adicionarFotoURL(produtoOptional.get());
 	}
-	
+	/*
 	public ProdutoMostrarDTO inserir(Produto produto, MultipartFile file) throws IOException {
 		imagemService.inserir(produtoRepository.save(produto), file);
 		return adicionarFotoURL(produto);
 	}
+*/
+
+	public ProdutoMostrarDTO inserir (ProdutoInserirDTO produtoInserirDTO) {
+		Produto produto = new Produto();
+		produto.setNome(produtoInserirDTO.getNome());
+		produto.setDescricao(produtoInserirDTO.getDescricao());
+		produto = produtoRepository.save(produto);
+		return new ProdutoMostrarDTO(produto);
+	}
+}
 	
 
-}
+
 

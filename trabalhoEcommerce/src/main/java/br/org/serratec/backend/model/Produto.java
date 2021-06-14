@@ -39,8 +39,7 @@ public class Produto {
     @ApiModelProperty(value = "Descricao")
     private String descricao;
 
-    @NotBlank (message = "Campo QUANTIDADE ESTOQUE vazio")
-    @Column(name = "qnt_estoque")
+    
     @ApiModelProperty(value = "Quantidade em Estoque", required = true)
     private Integer qntEstoque;
 
@@ -49,13 +48,13 @@ public class Produto {
     @ApiModelProperty(value = "Data de Cadastro")
     private LocalDate dataCadastro;
 
-    @NotBlank (message = "Campo VALOR UNITARIO vazio")
+
     @Column(name = "valor_unitario")
     @ApiModelProperty(value = "Valor Unitário", required = true)
     private Double valorUnitario;
 	
 	@JsonManagedReference
-	@ManyToOne
+	@ManyToOne 
 	@JoinColumn(name = "id_categoria")
 	@ApiModelProperty(value = "Categoria")
 	private Categoria categoria;

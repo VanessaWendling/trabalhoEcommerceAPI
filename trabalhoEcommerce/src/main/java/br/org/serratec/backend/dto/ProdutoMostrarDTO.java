@@ -6,7 +6,6 @@ import br.org.serratec.backend.model.Produto;
 public class ProdutoMostrarDTO {
 	private String nome;
 	private String url;
-	private Integer qntEstoque;
 	private Double valorUnitario;
 	private Categoria categoria;
 	
@@ -18,19 +17,11 @@ public class ProdutoMostrarDTO {
 	public ProdutoMostrarDTO(Produto produto) {
 		super();
 		this.nome = produto.getNome();
-		this.qntEstoque = produto.getQntEstoque();
 		this.valorUnitario = produto.getValorUnitario();
 		this.categoria = produto.getCategoria();
 	}
 
 	
-	public Integer getQntEstoque() {
-		return qntEstoque;
-	}
-
-	public void setQntEstoque(Integer qntEstoque) {
-		this.qntEstoque = qntEstoque;
-	}
 
 	public Double getValorUnitario() {
 		return valorUnitario;
