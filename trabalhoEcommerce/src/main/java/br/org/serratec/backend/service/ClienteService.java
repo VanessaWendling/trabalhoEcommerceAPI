@@ -2,14 +2,14 @@ package br.org.serratec.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.org.serratec.backend.config.MailConfig;
-import br.org.serratec.backend.dto.CadastroInserirDTO;
-import br.org.serratec.backend.dto.CadastroMostrarDTO;
+import br.org.serratec.backend.dto.ClienteInserirDTO;
 import br.org.serratec.backend.dto.ClienteMostrarDTO;
 import br.org.serratec.backend.exception.EmailException;
 import br.org.serratec.backend.model.Cliente;
@@ -39,26 +39,66 @@ public class ClienteService {
 		return clienteDTOs;
 	}
 
-	public CadastroMostrarDTO inserir(CadastroInserirDTO cadastroInserirDTO) throws EmailException {
-		Cliente u = clienteRepository.findByEmail(cadastroInserirDTO.getEmail()); // irá fazer o Find para conferir se o email
-																				// digitado já existe
+	public ClienteMostrarDTO inserir(ClienteInserirDTO clienteInserirDTO) throws EmailException {
+		Cliente u = clienteRepository.findByEmail(clienteInserirDTO.getEmail()); 
 		if (u != null) {
 			throw new EmailException("Email já existente | Insira outro");
 		}
-		// setar as variáveis, a criptografia da senha e depois salvar os dados passados
 		Cliente clienteSetar = new Cliente();
 		Endereco endereco = new Endereco();
-		clienteSetar.setNomeCompleto(cadastroInserirDTO.getNomeCompleto());
-		clienteSetar.setNomeUsuario(cadastroInserirDTO.getNomeUsuario());
-		clienteSetar.setEmail(cadastroInserirDTO.getEmail());
-		clienteSetar.setCpf(cadastroInserirDTO.getCpf());
-		clienteSetar.setSenha(bCryptPasswordEncoder.encode(cadastroInserirDTO.getSenha()));
-		clienteSetar.setDataNasc(cadastroInserirDTO.getDataNasc());
-		endereco.setCep(cadastroInserirDTO.getCep());
-		//clienteSetar.setEnderecos(enderecoService.organizarCep(cadastroInserirDTO));
-		//clienteSetar.setPedidos(clienteInserirDTO.getPedidos());
+		clienteSetar.setEnderecos(clienteInserirDTO.getEndereco());
+		clienteSetar.setNomeCompleto(clienteInserirDTO.getNomeCompleto());
+		clienteSetar.setNomeUsuario(clienteInserirDTO.getNomeUsuario());
+		clienteSetar.setEmail(clienteInserirDTO.getEmail());
+		clienteSetar.setCpf(clienteInserirDTO.getCpf());
+		clienteSetar.setSenha(bCryptPasswordEncoder.encode(clienteInserirDTO.getSenha()));
+		clienteSetar.setDataNasc(clienteInserirDTO.getDataNasc());
+		endereco.setCep(clienteInserirDTO.getEndereco().getCep());
 		clienteSetar = clienteRepository.save(clienteSetar);
-		mailConfig.enviarEmail(cadastroInserirDTO.getEmail(), "Cadastro de Cliente", clienteSetar.toString());
-		return new CadastroMostrarDTO(clienteSetar);
+		mailConfig.enviarEmail(clienteInserirDTO.getEmail(), "Cadastro de Cliente", clienteSetar.toString());
+		return new ClienteMostrarDTO(clienteSetar);
 	}
+	
+	public boolean deletar(Long id) {
+		if (!clienteRepository.existsById(id)) {
+			return false;
+		}
+		clienteRepository.deleteById(id);
+		return true;
+	}
+	
+	public ClienteMostrarDTO atualizar(Long id, ClienteInserirDTO clienteInserirDTO) {
+		Cliente cliente = new Cliente();
+		if (!clienteRepository.existsById(id)) {
+			return null;
+		}
+		cliente.setIdCliente(id);
+		cliente.setCpf(clienteInserirDTO.getCpf());
+		cliente.setNomeCompleto(clienteInserirDTO.getNomeCompleto());
+		cliente.setNomeUsuario(clienteInserirDTO.getNomeUsuario());
+		cliente.setEmail(clienteInserirDTO.getEmail());
+		cliente.setSenha(clienteInserirDTO.getSenha());
+		cliente.setTelefone(clienteInserirDTO.getTelefone());
+		cliente.setEnderecos(clienteInserirDTO.getEndereco());
+		cliente.setDataNasc(clienteInserirDTO.getDataNasc());
+		cliente = clienteRepository.save(cliente);
+		return new ClienteMostrarDTO(cliente);
+	}
+	
+	public ClienteMostrarDTO buscar (Long id) {
+		Optional<Cliente> cliente = clienteRepository.findById(id);
+		if (!cliente.isPresent()) {
+			return null;
+		}
+		return new ClienteMostrarDTO(cliente.get());
+	}
+	
+		public ClienteMostrarDTO buscarPorNome (String nome) {
+		Optional<Cliente> cliente = clienteRepository.findByNomeCompleto(nome);
+		if (!cliente.isPresent()) {
+			return null;
+		}
+		return new ClienteMostrarDTO(cliente.get());
+	}
+	
 }

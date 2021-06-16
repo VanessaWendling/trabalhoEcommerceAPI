@@ -7,7 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -19,40 +23,48 @@ public class ItemPedido {
 	@ApiModelProperty(value = "Identificador único do Pedido Item")
 	private Long idItemPedido;
 
-	@NotBlank (message = "Campo PREÇO VENDA vazio")
-    @Column(name = "preco_venda")
+	@NotBlank(message = "Campo PREÇO VENDA vazio")
+	@Column(name = "preco_venda")
 	@ApiModelProperty(value = "Preço de venda", required = true)
-    private Integer precoVenda;
+	@Min(0)
+	private Double precoVenda;
 
-    @NotBlank (message = "Campo QUANTIDADE vazio")
-    @Column(name = "quantidade")
-    @ApiModelProperty(value = "Quantidade", required = true)
-    private Integer quantidade;
+	@NotBlank(message = "Campo QUANTIDADE vazio")
+	@Column(name = "quantidade")
+	@ApiModelProperty(value = "Quantidade", required = true)
+	@Min(1)
+	private Integer quantidade;
 
+	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="id_pedido")
+	@JoinColumn(name = "id_pedido")
 	@ApiModelProperty(value = "Identificador único do Pedido")
 	private Pedido pedido;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_produto")
+	@JoinColumn(name = "id_produto")
 	@ApiModelProperty(value = "Identificador único do Produto")
 	private Produto produto;
-	
+
+	@Transient
+	private Double subTotal;
 
 	public ItemPedido() {
-		// TODO Auto-generated constructor stub
+		this.subTotal = new Double(0);
 	}
 
-	public ItemPedido(Long idItemPedido, Integer precoVenda, Integer quantidade, Pedido pedido, Produto produto) {
+	public ItemPedido(Long idItemPedido, @NotBlank(message = "Campo PREÇO VENDA vazio") Double precoVenda,
+			@NotBlank(message = "Campo QUANTIDADE vazio") Integer quantidade, Pedido pedido, Produto produto,
+			Double subTotal) {
 		super();
 		this.idItemPedido = idItemPedido;
 		this.precoVenda = precoVenda;
 		this.quantidade = quantidade;
 		this.pedido = pedido;
 		this.produto = produto;
+		this.subTotal = new Double(0);
 	}
-
+	
 	public Long getIdItemPedido() {
 		return idItemPedido;
 	}
@@ -61,11 +73,11 @@ public class ItemPedido {
 		this.idItemPedido = idItemPedido;
 	}
 
-	public Integer getPrecoVenda() {
+	public Double getPrecoVenda() {
 		return precoVenda;
 	}
 
-	public void setPrecoVenda(Integer precoVenda) {
+	public void setPrecoVenda(Double precoVenda) {
 		this.precoVenda = precoVenda;
 	}
 
@@ -91,6 +103,25 @@ public class ItemPedido {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public Double getSubTotal() {
+		this.setSubTotal();
+		return subTotal;
+	}
+	
+	public void setSubTotal() {
+		this.subTotal += (precoVenda.doubleValue() * quantidade.doubleValue());	
+	}
+	
+	public void setSubTotal(Double subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	@Override
+	public String toString() {
+		return "IdItemPedido: " + idItemPedido + "\n PrecoVenda: " + precoVenda + "\n Quantidade: " + quantidade
+				+ "\n Pedido: " + pedido + "\n Produto: " + produto + "\n SubTotal: " + subTotal;
 	}
 
 	@Override

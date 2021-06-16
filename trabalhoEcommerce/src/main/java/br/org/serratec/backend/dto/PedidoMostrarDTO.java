@@ -10,7 +10,8 @@ public class PedidoMostrarDTO {
 	private LocalDate dataEntrega;
 	private LocalDate dataEnvio;
 	private Status status;
-	
+	private Double total;
+
 	public PedidoMostrarDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -21,6 +22,15 @@ public class PedidoMostrarDTO {
 		this.dataEntrega = pedido.getDataEntrega();
 		this.dataEnvio = pedido.getDataEnvio();
 		this.status = pedido.getStatus();
+		this.total = pedido.getTotal();
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	public LocalDate getDataPedido() {

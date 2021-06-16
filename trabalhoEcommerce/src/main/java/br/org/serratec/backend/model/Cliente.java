@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,7 +57,7 @@ public class Cliente {
     @ApiModelProperty(value = "CPF", required = true)
     private String cpf;
 
-    @NotBlank(message = "Campo SENHA vaziO")
+    @NotBlank(message = "Campo SENHA vazia")
     @Size(max = 255, message = "Senha muito grande")
     @ApiModelProperty(value = "Senha", required = true)
     private String senha;
@@ -75,7 +74,7 @@ public class Cliente {
 	@ApiModelProperty(value = "Endereco do Cliente", required = true)
 	private Endereco enderecos;
 	
-	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
 	@ApiModelProperty(value = "Pedidos do Cliente")
 	private List<Pedido> pedidos = new ArrayList<Pedido>();

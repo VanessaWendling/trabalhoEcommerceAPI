@@ -37,10 +37,6 @@ public class Endereco {
 	@ApiModelProperty(value = "Cidade")
 	private String cidade;
 	
-	@NotBlank (message = "Campo NUMERO vazio")
-	@ApiModelProperty(value = "Bairro", required = true)
-	private Integer numero;
-	
 	@Size(max = 20)
 	@ApiModelProperty(value = "Complemento")
 	private String complemento;
@@ -54,13 +50,12 @@ public class Endereco {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Endereco(Long id, String cep, String rua, Integer numero, String bairro, String cidade, String complemento,
+	public Endereco(Long id, String cep, String rua, String bairro, String cidade, String complemento,
 			String estado) {
 		super();
 		this.id = id;
 		this.cep = cep;
 		this.rua = rua;
-		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.complemento = complemento;
@@ -92,15 +87,6 @@ public class Endereco {
 	public void setRua(String rua) {
 		this.rua = rua;
 	}
-
-	public Integer getNumero() {
-		return numero;
-	}
-
-	public void setNumero(Integer numero) {
-		this.numero = numero;
-	}
-
 	public String getBairro() {
 		return bairro;
 	}

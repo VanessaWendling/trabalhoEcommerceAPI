@@ -4,29 +4,58 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.org.serratec.backend.model.Cliente;
 import br.org.serratec.backend.model.ItemPedido;
 import br.org.serratec.backend.model.Pedido;
+import br.org.serratec.backend.model.Produto;
 import br.org.serratec.backend.model.Status;
 
-
 public class PedidoInserirDTO {
+
 	private LocalDate dataPedido;
 	private LocalDate dataEntrega;
 	private LocalDate dataEnvio;
 	private Status status;
-	private List<ItemPedido> itemPedido = new ArrayList<ItemPedido>();
+	private Cliente cliente;
+	private Produto produto;
+	private List<ItemPedido> itens = new ArrayList<>();
 	
 	public PedidoInserirDTO() {
-		// TODO Auto-generated constructor stub
 	}
-
+	
 	public PedidoInserirDTO(Pedido pedido) {
 		super();
 		this.dataPedido = pedido.getDataPedido();
 		this.dataEntrega = pedido.getDataEntrega();
 		this.dataEnvio = pedido.getDataEnvio();
 		this.status = pedido.getStatus();
-		this.itemPedido = pedido.getItemPedido();
+		this.itens = pedido.getItens();
+		
+	}
+	
+
+	public List<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemPedido> itens) {
+		this.itens = itens;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public LocalDate getDataPedido() {
@@ -60,13 +89,4 @@ public class PedidoInserirDTO {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-	public List<ItemPedido> getItemPedido() {
-		return itemPedido;
-	}
-
-	public void setItemPedido(List<ItemPedido> itemPedido) {
-		this.itemPedido = itemPedido;
-	}
-	
 }

@@ -43,16 +43,6 @@ public class CategoriaService {
 		categoriaRepository.deleteById(id);
 		return true;
 	}
-	
-	public CategoriaMostrarDTO atualizar(Long id, CategoriaInserirDTO categoriaInserirDTO) {
-		Categoria categoria = new Categoria();
-		if (!categoriaRepository.existsById(id)) {
-			return null;
-		}
-		categoria.setId(id);
-		categoria = categoriaRepository.save(categoria);
-		return new CategoriaMostrarDTO(categoria);
-	}
 	public CategoriaMostrarDTO buscar (Long id) {
 		Optional<Categoria> categoria = categoriaRepository.findById(id);
 		if (!categoria.isPresent()) {
@@ -68,5 +58,16 @@ public class CategoriaService {
 		}
 		return new CategoriaMostrarDTO(categoria.get());
 	}
-	
+		
+		public CategoriaMostrarDTO atualizar(Long id, CategoriaInserirDTO categoriaInserirDTO) {
+			Categoria categoria = new Categoria();
+			if (!categoriaRepository.existsById(id)) {
+				return null;
+			}
+			categoria.setId(id);
+			categoria.setDescricao(categoriaInserirDTO.getDescricao());
+			categoria.setNome(categoriaInserirDTO.getNome());
+			categoria = categoriaRepository.save(categoria);
+			return new CategoriaMostrarDTO(categoria);
+		}
 }

@@ -30,7 +30,7 @@ public class Imagem {
 	
 	@OneToOne
 	@JoinColumn (name = "id_produto")
-	@ApiModelProperty(value = "Produto", required = true)
+	//@ApiModelProperty(value = "Produto", required = true)
 	private Produto produto;
 	
 	public Imagem() {

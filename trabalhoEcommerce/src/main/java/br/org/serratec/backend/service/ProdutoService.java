@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.org.serratec.backend.dto.CategoriaInserirDTO;
-import br.org.serratec.backend.dto.CategoriaMostrarDTO;
 import br.org.serratec.backend.dto.ProdutoInserirDTO;
 import br.org.serratec.backend.dto.ProdutoMostrarDTO;
-import br.org.serratec.backend.model.Categoria;
 import br.org.serratec.backend.model.Produto;
 import br.org.serratec.backend.repository.ProdutoRepository;
 
@@ -45,11 +41,11 @@ public class ProdutoService {
 		System.out.println("URI: " + uri);
 		ProdutoMostrarDTO produtoDTO = new ProdutoMostrarDTO();
 		produtoDTO.setNome(produto.getNome());
-		produto.setCategoria(produto.getCategoria());
-		produto.setDataCadastro(produto.getDataCadastro());
-		produto.setDescricao(produto.getDescricao());
-		produto.setNome(produto.getNome());
-		produto.setValorUnitario(produto.getValorUnitario());
+		produtoDTO.setCategoria(produto.getCategoria());
+		produtoDTO.setDataCadastro(produto.getDataCadastro());
+		produtoDTO.setDescricao(produto.getDescricao());
+		produtoDTO.setNome(produto.getNome());
+		produtoDTO.setValorUnitario(produto.getValorUnitario());
 		produtoDTO.setUrl(uri.toString());
 		return produtoDTO;
 	}
@@ -58,17 +54,40 @@ public class ProdutoService {
 		Optional<Produto> produtoOptional = produtoRepository.findById(id);
 		return adicionarFotoURL(produtoOptional.get());
 	}
-	/*
+	
 	public ProdutoMostrarDTO inserir(Produto produto, MultipartFile file) throws IOException {
 		imagemService.inserir(produtoRepository.save(produto), file);
 		return adicionarFotoURL(produto);
 	}
-*/
+
 
 	public ProdutoMostrarDTO inserir (ProdutoInserirDTO produtoInserirDTO) {
 		Produto produto = new Produto();
 		produto.setNome(produtoInserirDTO.getNome());
 		produto.setDescricao(produtoInserirDTO.getDescricao());
+		produto = produtoRepository.save(produto);
+		return new ProdutoMostrarDTO(produto);
+	}
+	
+	public boolean deletar(Long id) {
+		if (!produtoRepository.existsById(id)) {
+			return false;
+		}
+		produtoRepository.deleteById(id);
+		return true;
+	}
+	
+	public ProdutoMostrarDTO atualizar(Long id, ProdutoInserirDTO produtoInserirDTO) {
+		Produto produto = new Produto();
+		if (!produtoRepository.existsById(id)) {
+			return null;
+		}
+		produto.setId(id);
+		produto.setCategoria(produtoInserirDTO.getCategoria());
+		produto.setDataCadastro(produtoInserirDTO.getDataCadastro());
+		produto.setDescricao(produtoInserirDTO.getDescricao());
+		produto.setNome(produtoInserirDTO.getNome());
+		produto.setValorUnitario(produtoInserirDTO.getValorUnitario());
 		produto = produtoRepository.save(produto);
 		return new ProdutoMostrarDTO(produto);
 	}

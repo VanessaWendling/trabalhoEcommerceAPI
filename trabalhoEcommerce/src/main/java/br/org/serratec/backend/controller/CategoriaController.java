@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -70,7 +71,6 @@ public class CategoriaController {
 		}
 		return ResponseEntity.noContent().build();
 	}
-
 	
 	@GetMapping ("/porid/{id}")
 	@ApiOperation(value = "Buscar categoria por ID", notes = "Buscar por ID")
@@ -102,8 +102,22 @@ public class CategoriaController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(dto);
-
 	}
 	
-	
+	@PutMapping("/{id}")
+	@ApiOperation(value = "Atualizar determinado Categoria", notes = "Atualizar Categoria")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Categoria atualizado com sucesso"),
+			@ApiResponse(code = 201, message = "Categoria criado com sucesso"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Você não tem permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso Indisponivel"),
+			@ApiResponse(code = 500, message = "Erros interno do servidor"),
+			@ApiResponse(code = 505, message = "Ocorreu uma exceção") })
+	public ResponseEntity<CategoriaMostrarDTO> atualizar(@PathVariable Long id, @RequestBody CategoriaInserirDTO categoriaInserirDTO) {
+		CategoriaMostrarDTO categoriaMostrarDTO = categoriaService.atualizar(id, categoriaInserirDTO);
+		if (categoriaMostrarDTO == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(categoriaMostrarDTO);
+	}
 }

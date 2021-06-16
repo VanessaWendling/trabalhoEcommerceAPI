@@ -12,6 +12,7 @@ public class ProdutoInserirDTO {
     private Double valorUnitario;
 	private Categoria categoria;
 	
+	
 	public ProdutoInserirDTO() {
 		// TODO Auto-generated constructor stub
 	}

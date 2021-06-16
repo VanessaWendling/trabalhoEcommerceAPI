@@ -1,9 +1,8 @@
 package br.org.serratec.backend.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -39,10 +37,6 @@ public class Produto {
     @ApiModelProperty(value = "Descricao")
     private String descricao;
 
-    
-    @ApiModelProperty(value = "Quantidade em Estoque", required = true)
-    private Integer qntEstoque;
-
     @Past
     @Column(name = "data_cadastro")
     @ApiModelProperty(value = "Data de Cadastro")
@@ -53,31 +47,36 @@ public class Produto {
     @ApiModelProperty(value = "Valor Unitário", required = true)
     private Double valorUnitario;
 	
-	@JsonManagedReference
+	@JsonBackReference
 	@ManyToOne 
 	@JoinColumn(name = "id_categoria")
 	@ApiModelProperty(value = "Categoria")
 	private Categoria categoria;
 	
-	@JsonBackReference
+	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
+	private Imagem imagem;
+	
+	/*@JsonBackReference
 	@OneToMany(mappedBy = "produto")
 	@ApiModelProperty(value = "Lista de Pedidos")
-	private List<ItemPedido> itemPedido = new ArrayList<ItemPedido>();
+	private List<ItemPedido> itemPedido = new ArrayList<ItemPedido>();*/
 	
 	public Produto() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Produto(Long id, String nome, String descricao, Integer qntEstoque, LocalDate dataCadastro,
-			Double valorUnitario, Categoria categoria) {
+
+	public Produto(Long id,
+			@NotBlank(message = "Campo NOME vazio") @Size(max = 30, message = "NOME acima de 30 caracteres") String nome,
+			@Size(max = 100, message = "DESCRIÇÃO acima de 100 caracteres") String descricao,
+			@Past LocalDate dataCadastro, Double valorUnitario, Categoria categoria) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.qntEstoque = qntEstoque;
 		this.dataCadastro = dataCadastro;
 		this.valorUnitario = valorUnitario;
 		this.categoria = categoria;
+		//this.itemPedido = itemPedido;
 	}
 
 	public Long getId() {
@@ -104,14 +103,6 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public Integer getQntEstoque() {
-		return qntEstoque;
-	}
-
-	public void setQntEstoque(Integer qntEstoque) {
-		this.qntEstoque = qntEstoque;
-	}
-
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
@@ -135,7 +126,14 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
+
+	/*public List<ItemPedido> getItemPedido() {
+		return itemPedido;
+	}
+
+	public void setItemPedido(List<ItemPedido> itemPedido) {
+		this.itemPedido = itemPedido;
+	}*/
 
 	@Override
 	public int hashCode() {
@@ -161,5 +159,6 @@ public class Produto {
 			return false;
 		return true;
 	}
+	
 	
 }
